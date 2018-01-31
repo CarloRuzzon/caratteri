@@ -3,18 +3,17 @@
 int main()
 {
   int c, stato, NORM = 0, A = 1;
+  stato = NORM;
   while( (c = getchar()) != EOF){
-    stato = NORM;
     if (stato == NORM){
-      if (c != ' ') putchar(c);
-      else stato = A;
+      if (c == ' ') stato = A;
+      putchar(c);
     }
     else if( stato == A){
       if (c != ' '){
-        putchar(' ');
         putchar(c);
+        stato = NORM; 
       }
-      else putchar(' ');
     }
   }
   return 0;
