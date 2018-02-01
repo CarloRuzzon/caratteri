@@ -2,13 +2,25 @@
 
 int main()
 {
-  int c, s = 0, ci = 0, ac = 0;
+  int c, s = 0, ci[10], ac = 0, i;
 
-  while( (c = getchar()) != EOF){
-    if ( c == ' ' || c == '\n' || c == '\t') s++;
-    else if (c >= '0' && c <= '9') ci++;
+  for (i = 0; i < 10; i++){
+    ci[i] = 0;
+  }
+  
+  while( (c = getchar() ) != EOF){
+    if ( c >= '0' && c <= '9')
+      ci[c-'0']++;
+    else if ( c == ' ' || c == '\n' || c == '\t') s++;
     else ac++;
   }
-  printf("Ci sono %d spaziature, %d cifre e %d di caratteri restanti\n", s, ci, ac);
+  
+  printf("Cifre:\n");
+  
+  for (i = 0; i < 10; i++){
+    printf("%d) %d\n", i, ci[i]);
+  }
+
+  printf("Ci sono %d spaziature, %d di caratteri restanti\n", s, ac);
   return 0;
   }
