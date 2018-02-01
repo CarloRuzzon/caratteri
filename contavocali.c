@@ -7,20 +7,12 @@ int main()
   while ( (c = getchar()) != EOF){
     switch(c){
       case 'a':
-        v ++;
-        break;
 
       case 'e':
-        v++;
-        break;
 
       case 'i':
-        v++;
-        break;
 
       case 'o':
-        v++;
-        break;
 
       case 'u':
         v++;
