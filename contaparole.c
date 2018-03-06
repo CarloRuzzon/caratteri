@@ -4,10 +4,10 @@
  
   TABELLA
 
-  A -> B : QUANDO SIAMO ALL'ESTERNO
-  A -> A : ANCORA ALL'INTERNO
-  B -> B : DALL'ESTERNO ALL'ESTERNO
-  B -> A : DALL'ESTERNO ALL'INTERNO
+  A -> B : se c == ' ' or c == '\t' or c == '\n' 
+  A -> A : se c != ' ' and c != '\t' and c != '\n'
+  B -> B : supponendo che non ci siano doppi spazi, opzione impossibile 
+  B -> A : se c != ' ' and c != '\t' and c != '\n'
 
  */
 #include<stdio.h>
