@@ -2,6 +2,11 @@
  * stati
  * IN -> ALL'INTERNO DELLA PAROLA
  * OUT -> ALL'ESTERNO DELLA PAROLA
+ *
+ * da IN a IN -> if c != ' ' or c != '/t' or c != '/n'
+ * da IN a OUT -> if c == ' ' or c == '/t' or c == '/n'
+ * da OUT a OUT -> impossibile
+ * da OUT a IN -> if c!= ' ' or c != '/t' or c != '/n'
  */
 #include<stdio.h>
 
@@ -16,7 +21,7 @@ int main(){
 				putchar(c);
 			}
 			else{
-			       	stato = OUT;
+			       	stato = IN;
 				putchar('\n');
 			}
 			
