@@ -1,12 +1,14 @@
 #include<stdio.h>
 /*
- * Stato di posizionamento (a):
- * out: fuori dal commento 
- * in: all'interno del commento
- *
- * stato di slash:
- * f = attesa dello slash
- * a_a = attesa astrisco
+Stato:		carattere in ingresso: 		carattere in uscita:		nuovo stato:
+OUT		c != /				c				OUT
+OUT		c == /				NULL				attesa_slash
+attesa_ast      c != *				/ + c				OUT
+attesa_ast      c == *      			NULL				IN
+IN		c != / 				NULL				IN
+IN 		c == /				NULL				attesa_ast
+attesa_slash	c != *				NULL				IN
+attesa_slash    c == *                          NULL  				OUT
 */
 int main(){
   int c;
