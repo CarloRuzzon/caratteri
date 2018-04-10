@@ -1,65 +1,104 @@
 #include<stdio.h>
 /*
-Stato:		carattere in ingresso: 		carattere in uscita:		nuovo stato:
-OUT		c != /				c				OUT
-OUT		c == /				NULL				attesa_slash
-attesa_ast      c != *				/ + c				OUT
-attesa_ast      c == *      			NULL				IN
-IN		c != / 				NULL				IN
-IN 		c == /				NULL				attesa_ast
-attesa_slash	c != *				NULL				IN
-attesa_slash    c == *                          NULL  				OUT
+Stato:		          carattere in ingresso: 		carattere in uscita:		nuovo stato:
+OUT		              c != /				             c                      OUT
+OUT		                c == /				          NULL            				attesa_ast
+OUT                 c == "                    c                       virgoletta
+OUT                 c == '                    c                       apice
+
+apice               c != '                    c                       apice
+apice               c == '                    c                       OUT
+
+virgoletta          c != "                    c                       virgoletta
+virgoletta          c == "                    c                       OUT
+
+attesa_ast          c != *				            / + c			             	OUT
+attesa_ast          c == *      			        NULL			            	IN
+
+IN		              c != * 				            NULL	                  IN
+IN 		              c == *				            NULL	                  attesa_slash
+
+attesa_slash	      c != /				            NULL				            IN
+attesa_slash        c == /                    NULL             				OUT
 */
 int main(){
   int c;
-  char r;
-  enum STATO_A {out, in};
-  enum STATO_A stato_a;
-  enum STATO_B {f, a_a};
-  enum STATO_B stato_s;
-  stato_a = out;
-  stato_s = f;
+  enum STATO {out, in, a_s, a_a, virgoletta, apice};
+  enum STATO stato;
+  stato = out;
 
   while( (c = getchar()) != EOF){
-    if (stato_a == out){
-      if(stato_s == f){
-        if (c == '/'){
-          stato_s = a_a;
-          r = c;
-        }
+    if (stato == out){
+      
+      if (c == '\''){
+        putchar(c);
+        stato = apice;
+      }
 
-        else{
-          putchar(c);
-        }
+      else if (c == '"'){
+        putchar(c);
+        /*prova*/
+        stato = virgoletta;
       }
-       else if (stato_s == a_a){
-        if(c == '*'){
-          stato_a = in;
-          stato_s = f;
-        }
-        else{
-          putchar(r);
-          putchar(c);
-          stato_s = f;
-        }
+      else if(c == '/'){
+        stato = a_a;
+      }
+      
+      else{
+        putchar(c);
       }
     }
-    else if (stato_a == in){
-      if (stato_s == f){  
-      if (c == '*'){
-          stato_s = a_a;
-        }
+
+    else if (stato == apice){
+      if (c != '\''){
+        putchar(c);
       }
-      else if (stato_s == a_a){
-        if(c == '/' ){
-          stato_s = f;
-          stato_a = out;
-        }
-        else{
-          stato_s = f;
-        }
+      else{
+        putchar(c);
+        stato = out;
+      }
     }
-  }
+
+    else if (stato == virgoletta){
+      if (c != '"'){
+        putchar(c);
+      }
+      else{
+        putchar(c);
+        stato = out;
+      }
+    }
+
+    else if (stato == a_a){
+        
+      if(c == '*'){
+        stato = in;
+      }
+
+      else{
+        putchar('/');
+        putchar(c);
+        stato = out;
+      }
+    }
+    
+    else if (stato == in){
+      
+      if (c == '*'){  
+          stato = a_s;
+      }
+    }
+    
+    else if (stato == a_s){
+      
+      if (c == '/'){
+          stato = out;
+      }
+
+      else{
+        stato = in;
+      }
+    }
   }
   return 0;
 }
